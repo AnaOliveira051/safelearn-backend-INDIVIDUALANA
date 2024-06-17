@@ -2,6 +2,7 @@ import componentes.*;
 import dao.MaquinaDaoLocal;
 import dao.MaquinaDaoServer;
 import setup.InserirRegistros;
+import systemcommands.FecharJanela;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -13,6 +14,7 @@ public class App {
 
     public static void main(String[] args) {
         InserirRegistros inserirRegistros = new InserirRegistros();
+        FecharJanela controle = new FecharJanela();
 
         MaquinaDaoServer maquinaDaoServer = new MaquinaDaoServer();
         MaquinaDaoLocal maquinaDaoLocal = new MaquinaDaoLocal();
@@ -47,7 +49,7 @@ public class App {
                 try {
 
                     
-                    if (idsComponentesLocal == null || idsComponentesLocal.isEmpty() || idsComponentesLocal.size() < 3) {
+                   if (idsComponentesLocal == null || idsComponentesLocal.isEmpty() || idsComponentesLocal.size() < 3) {
                         throw new IllegalStateException("idsComponentesLocal is null, empty, or does not contain enough elements");
                     }
                     if (idsComponentesServer == null || idsComponentesServer.isEmpty() || idsComponentesServer.size() < 3) {
@@ -62,6 +64,7 @@ public class App {
                     maquinaDaoServer.inserirDadosProcessso(processador, janelas);
                     maquinaDaoLocal.inserirDadosBateria(processador, bateria);
                     maquinaDaoServer.inserirDadosBateria(processador, bateria);
+                    controle.closeWindow();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.err.println("Erro no monitoramento: " + e.getMessage());
